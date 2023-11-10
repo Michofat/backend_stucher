@@ -10,10 +10,6 @@ export const courseModel = (sequelize, DataTypes) => {
     },
     teacherid: {
       type: DataTypes.UUID,
-      references: {
-        model: userModel,
-        key: "userid",
-      },
       allowNull: false,
     },
     title: {

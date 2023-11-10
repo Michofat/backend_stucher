@@ -49,4 +49,14 @@ db.sequelize.sync({ force: false }).then(() => {
 //   console.log("Hard reset done!!");
 // });  "CASCADE",
 
+db.user.hasMany(db.course, {
+  foreignKey: "teacherid",
+  onDelete: "CASCADE",
+});
+db.course.belongsTo(db.user, {
+  foreignKey: "teacherid",
+  as: "user",
+  onDelete: "CASCADE",
+});
+
 export default db;

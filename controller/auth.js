@@ -26,7 +26,7 @@ export const updateProfile = async (req, res, next) => {
   };
   try {
     await User.update(updates, { where: { userid } });
-    return res.status(201).send({
+    return res.status(200).send({
       message: "update successful",
     });
   } catch (error) {
@@ -41,7 +41,7 @@ export const updateProfilePicture = async (req, res, next) => {
   };
   try {
     await User.update(update, { where: { userid } });
-    return res.status(201).send({
+    return res.status(200).send({
       message: "profile picture updated successful",
     });
   } catch (error) {

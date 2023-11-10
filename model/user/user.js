@@ -4,6 +4,7 @@ export const userModel = (sequelize, DataTypes) => {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       unique: true,
+      primaryKey: true,
       allowNull: false,
     },
     firstname: {
