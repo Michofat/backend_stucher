@@ -118,3 +118,69 @@ export const getTeachersCourse = async (req, res) => {
     res.status(200).send(courses);
   } catch (error) {}
 };
+
+export const getSingleTeachersCourse = async (req, res) => {
+  let { courseid, teacherid } = req.params;
+  let doesExist = await Course.findOne({
+    where: { teacherid, courseid },
+  });
+  try {
+    if (!doesExist) {
+      res.status(404).send({ message: "doesnt exist" });
+    }
+    const courses = await Course.findOne({
+      where: {
+        teacherid,
+        courseid,
+      },
+      include: [
+        {
+          model: User,
+          as: "user",
+          attibutes: ["id"],
+        },
+      ],
+    });
+    res.status(200).send(courses);
+  } catch (error) {}
+};
+
+export const getAnySingleCourse = async (req, res) => {
+  let { courseid } = req.params;
+  let doesExist = await Course.findOne({
+    where: { courseid },
+  });
+  try {
+    if (!doesExist) {
+      res.status(404).send({ message: "course doesnt exist" });
+    }
+    const course = await Course.findOne({
+      where: {
+        courseid,
+      },
+      include: [
+        {
+          model: User,
+          as: "user",
+          attibutes: ["id"],
+        },
+      ],
+    });
+    res.status(200).send(course);
+  } catch (error) {}
+};
+
+export const getAllCourses = async (req, res) => {
+  try {
+    const courses = await Course.findAll({
+      include: [
+        {
+          model: User,
+          as: "user",
+          attibutes: ["id"],
+        },
+      ],
+    });
+    res.status(200).send(courses);
+  } catch (error) {}
+};
