@@ -3,8 +3,14 @@ const Course = db.course;
 const User = db.user;
 export const createCourse = async (req, res, next) => {
   let { teacherid } = req.params;
-  let { title, description, videolink, imagelink, introductoryvideolink } =
-    req.body;
+  let {
+    title,
+    description,
+    videolink,
+    imagelink,
+    introductoryvideolink,
+    courseimage,
+  } = req.body;
   const courses = {
     teacherid,
     title,
@@ -12,6 +18,7 @@ export const createCourse = async (req, res, next) => {
     videolink,
     imagelink,
     introductoryvideolink,
+    courseimage,
   };
   try {
     await Course.create(courses);
@@ -31,14 +38,21 @@ export const updateCourse = async (req, res, next) => {
       teacherid,
     },
   });
-  let { title, description, videolink, imagelink, introductoryvideolink } =
-    req.body;
+  let {
+    title,
+    description,
+    videolink,
+    imagelink,
+    introductoryvideolink,
+    courseimage,
+  } = req.body;
   const courseupdates = {
     title,
     description,
     videolink,
     imagelink,
     introductoryvideolink,
+    courseimage,
   };
   try {
     if (doesCourseExist) {
@@ -89,7 +103,7 @@ export const deleteCourse = async (req, res, next) => {
   }
 };
 
-export const getTeachersCourse = async (req, res) => {
+export const getTeachersCourses = async (req, res) => {
   let { teacherid } = req.params;
   let doesUserExist = await User.findOne({
     where: { userid: teacherid },

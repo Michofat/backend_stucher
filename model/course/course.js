@@ -37,6 +37,10 @@ export const courseModel = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
+    courseimage: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   });
 
   return Course;
