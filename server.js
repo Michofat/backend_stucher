@@ -21,8 +21,8 @@ app.use(express.urlencoded({ extended: true }));
 
 //routes
 app.use("/mobile/v1", authRoutes);
-app.use("/mobile/v1/course", courseRoutes);
-app.use("/mobile/v1/lesson", lessonRoutes);
+app.use("/mobile/v1", courseRoutes);
+app.use("/mobile/v1", lessonRoutes);
 app.use("/", testRoutes);
 
 //error
