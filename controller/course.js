@@ -70,8 +70,11 @@ export const deleteCourse = async (req, res, next) => {
     },
   });
   try {
+    const update = {
+      status: false,
+    };
     if (doesCourseExist) {
-      await Course.destroy({
+      await Course.update(update, {
         where: {
           courseid,
           teacherid,
