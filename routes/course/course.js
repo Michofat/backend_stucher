@@ -3,7 +3,7 @@ import {
   createCourse,
   deleteCourse,
   getAllCourses,
-  getAnySingleCourse,
+  getCourseDetails,
   getSingleTeachersCourse,
   getTeachersCourse,
   updateCourse,
@@ -13,15 +13,12 @@ const routes = express.Router({
   mergeParams: true,
 });
 
-routes.post("/createcourse", createCourse);
+routes.post("/createcourse/:teacherid", createCourse);
 routes.patch("/updatecourse/:courseid/:teacherid", updateCourse);
 routes.delete("/deletecourse/:courseid/:teacherid", deleteCourse);
-routes.get("/getteachersCourse/:teacherid", getTeachersCourse);
-routes.get(
-  "/getsingleteachersCourse/:courseid/:teacherid",
-  getSingleTeachersCourse
-);
-routes.get("/getAnySinglecourse/:courseid", getAnySingleCourse);
-routes.get("/getAllCourses", getAllCourses);
+routes.get("/getcourses/:teacherid", getTeachersCourse);
+routes.get("/coursedetails/:courseid/:teacherid", getSingleTeachersCourse);
+routes.get("/coursedetails/:courseid", getCourseDetails);
+routes.get("/courses", getAllCourses);
 
 export default routes;

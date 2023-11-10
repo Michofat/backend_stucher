@@ -2,14 +2,9 @@ import db from "../model/index.js";
 const Course = db.course;
 const User = db.user;
 export const createCourse = async (req, res, next) => {
-  let {
-    teacherid,
-    title,
-    description,
-    videolink,
-    imagelink,
-    introductoryvideolink,
-  } = req.body;
+  let { teacherid } = req.params;
+  let { title, description, videolink, imagelink, introductoryvideolink } =
+    req.body;
   const courses = {
     teacherid,
     title,
@@ -145,7 +140,7 @@ export const getSingleTeachersCourse = async (req, res) => {
   } catch (error) {}
 };
 
-export const getAnySingleCourse = async (req, res) => {
+export const getCourseDetails = async (req, res) => {
   let { courseid } = req.params;
   let doesExist = await Course.findOne({
     where: { courseid },

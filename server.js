@@ -28,6 +28,6 @@ app.use("/", testRoutes);
 //error
 app.use(errorHandler);
 
-app.listen(5000, () => console.log(`server is running on port 8000`));
+app.listen(6000, () => console.log(`server is running on port 8000`));
 
 export default app;

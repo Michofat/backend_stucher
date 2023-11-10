@@ -1,21 +1,33 @@
 {
-  "name": "stucher",
+  "name": "backend_stucher",
   "version": "1.0.0",
-  "description": "teacher student rapport",
+  "description": "Backend for the stucher app",
   "type": "module",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Michofat/backend_stucher.git"
   },
-  "author": "fisto and omotayo",
+  "keywords": [],
+  "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Michofat/backend_stucher/issues"
   },
-  "homepage": "https://github.com/Michofat/backend_stucher#readme"
+  "homepage": "https://github.com/Michofat/backend_stucher#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.6.3",
+    "node-cron": "^3.0.3",
+    "nodemon": "^3.0.1",
+    "sequelize": "^6.34.0"
+  }
 }
