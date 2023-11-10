@@ -53,6 +53,10 @@ export const userModel = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
+    institution: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     status: {
       type: DataTypes.ENUM,
       defaultValue: "inactive",
@@ -63,7 +67,7 @@ export const userModel = (sequelize, DataTypes) => {
       allowNull: true,
       unique: true,
     },
-    aqccountnumber: {
+    accountnumber: {
       type: DataTypes.STRING(11),
       allowNull: true,
       unique: true,

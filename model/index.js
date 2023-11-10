@@ -1,6 +1,7 @@
 import { dbConn } from "../config/db.config.js";
 import { Sequelize, DataTypes } from "sequelize";
 import { userModel } from "./user/user.js";
+import { courseModel } from "./course/course.js";
 
 export const sequelize = new Sequelize(
   dbConn.DB,
@@ -29,11 +30,12 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 db.user = userModel(sequelize, DataTypes);
+db.course = courseModel(sequelize, DataTypes);
 db.sequelize.sync({ force: false }).then(() => {
   console.log("yes re-sync done!!");
 });
 
-// await sequelize.sync({ alter: true });
+//await sequelize.sync({ alter: true });
 // await sequelize
 //   .sync({ alter: true })
 //   .then(() => {
