@@ -5,7 +5,7 @@ const routes = express.Router({
   mergeParams: true,
 });
 
-routes.post("/createlesson", createLesson);
-routes.patch("/updatelesson/:coursid/:teachid/:lessonid", updateLesson);
+routes.post("/createlesson/:courseid/:teacherid", createLesson);
+routes.patch("/updatelesson/:courseid/:teacherid/:lessonid", updateLesson);
 
 export default routes;

@@ -1,8 +1,8 @@
 import db from "../model/index.js";
 const Lesson = db.lesson;
 export const createLesson = async (req, res, next) => {
-  let { courseid, teacherid, title, description, videolink, imagelink } =
-    req.body;
+  let { courseid, teacherid } = req.params;
+  let { title, description, videolink, imagelink } = req.body;
   const lessons = {
     courseid,
     teacherid,
@@ -21,20 +21,16 @@ export const createLesson = async (req, res, next) => {
   }
 };
 export const updateLesson = async (req, res, next) => {
-  let { coursid, teachid, lessonid } = req.params;
-  console.log(coursid, teachid, lessonid);
+  let { courseid, teacherid, lessonid } = req.params;
   const doesLessonExist = await Lesson.findOne({
     where: {
-      courseid: coursid,
-      teacherid: teachid,
+      courseid,
+      teacherid,
       lessonid,
     },
   });
-  let { courseid, teacherid, title, description, videolink, imagelink } =
-    req.body;
+  let { title, description, videolink, imagelink } = req.body;
   const lessonupdates = {
-    courseid,
-    teacherid,
     title,
     description,
     videolink,
@@ -43,7 +39,7 @@ export const updateLesson = async (req, res, next) => {
   try {
     if (doesLessonExist) {
       await Lesson.update(lessonupdates, {
-        where: { courseid: coursid, teacherid: teachid, lessonid },
+        where: { courseid, teacherid, lessonid },
       });
     } else {
       return res.status(404).send({
@@ -51,7 +47,7 @@ export const updateLesson = async (req, res, next) => {
       });
     }
     return res.status(200).send({
-      message: "course updated successfully",
+      message: "lesson updated successfully",
     });
   } catch (error) {
     next(error);
