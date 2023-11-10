@@ -2,6 +2,7 @@ import { dbConn } from "../config/db.config.js";
 import { Sequelize, DataTypes } from "sequelize";
 import { userModel } from "./user/user.js";
 import { courseModel } from "./course/course.js";
+import { lessonModel } from "./lesson/lesson.js";
 
 export const sequelize = new Sequelize(
   dbConn.DB,
@@ -31,6 +32,8 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 db.user = userModel(sequelize, DataTypes);
 db.course = courseModel(sequelize, DataTypes);
+db.lesson = lessonModel(sequelize, DataTypes);
+
 db.sequelize.sync({ force: false }).then(() => {
   console.log("yes re-sync done!!");
 });
@@ -57,6 +60,22 @@ db.course.belongsTo(db.user, {
   foreignKey: "teacherid",
   as: "user",
   onDelete: "CASCADE",
+});
+
+db.course.hasMany(db.lesson, {
+  foreignKey: "courseid",
+});
+db.lesson.belongsTo(db.course, {
+  foreignKey: "courseid",
+  as: "course",
+});
+
+db.user.hasMany(db.lesson, {
+  foreignKey: "teacherid",
+});
+db.lesson.belongsTo(db.user, {
+  foreignKey: "teacherid",
+  as: "user",
 });
 
 export default db;
