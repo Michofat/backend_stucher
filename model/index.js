@@ -3,6 +3,7 @@ import { Sequelize, DataTypes } from "sequelize";
 import { userModel } from "./user/user.js";
 import { courseModel } from "./course/course.js";
 import { lessonModel } from "./lesson/lesson.js";
+import { quizModel } from "./quiz/quiz.js";
 
 export const sequelize = new Sequelize(
   dbConn.DB,
@@ -33,6 +34,7 @@ db.sequelize = sequelize;
 db.user = userModel(sequelize, DataTypes);
 db.course = courseModel(sequelize, DataTypes);
 db.lesson = lessonModel(sequelize, DataTypes);
+db.quiz = quizModel(sequelize, DataTypes);
 
 db.sequelize.sync({ force: false }).then(() => {
   console.log("yes re-sync done!!");
@@ -77,5 +79,16 @@ db.lesson.belongsTo(db.user, {
   foreignKey: "teacherid",
   as: "user",
 });
+
+//relationship between quiz and lessons
+db.lesson.hasMany(db.quiz, {
+  foreignKey: "lessonid",
+});
+db.quiz.belongsTo(db.lesson, {
+  foreignKey: "lessonid",
+  as: "lesson",
+});
+
+//relationship between quiz and lessons
 
 export default db;

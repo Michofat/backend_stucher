@@ -13,6 +13,7 @@ export const courseModel = (sequelize, DataTypes) => {
       type: DataTypes.UUID,
       allowNull: false,
     },
+
     title: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -40,6 +41,10 @@ export const courseModel = (sequelize, DataTypes) => {
     courseimage: {
       type: DataTypes.STRING,
       allowNull: true,
+    },
+    published: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
     },
   });
 

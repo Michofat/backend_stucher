@@ -3,6 +3,8 @@ import authRoutes from "./routes/auth/auth.js";
 import testRoutes from "./routes/test/test.js";
 import courseRoutes from "./routes/course/course.js";
 import lessonRoutes from "./routes/lesson/lesson.js";
+import quizRoutes from "./routes/quiz/quiz.js";
+
 import cors from "cors";
 import bodyParser from "body-parser";
 import { errorHandler } from "./error/error.js";
@@ -23,6 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/mobile/v1", authRoutes);
 app.use("/mobile/v1", courseRoutes);
 app.use("/mobile/v1", lessonRoutes);
+app.use("/mobile/v1", quizRoutes);
 app.use("/", testRoutes);
 
 //error

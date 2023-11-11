@@ -28,6 +28,10 @@ export const lessonModel = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
+    quizadded: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
   });
 
   return Lesson;
