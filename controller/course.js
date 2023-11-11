@@ -204,7 +204,6 @@ export const getTeachersCourses = async (req, res, next) => {
   const { teacherid } = req.params;
 
   try {
-    // Find the course and include its associated lessons
     const courseWithLessons = await Course.findAll({
       where: {
         teacherid,
@@ -224,9 +223,6 @@ export const getTeachersCourses = async (req, res, next) => {
     if (!courseWithLessons) {
       return res.status(404).json({ message: "Course not found" });
     }
-
-    // Access the lessons using courseWithLessons.Lessons
-    //  const lessons = courseWithLessons.course;
 
     return res.status(200).json(courseWithLessons);
   } catch (error) {
@@ -251,11 +247,10 @@ export const publishCourse = async (req, res, next) => {
         },
       ],
     });
-
     if (!courseWithLessons) {
       return res.status(404).json({ message: "Course not found" });
     } else {
-      if (courseWithLessons.lessons.length > 1) {
+      if (courseWithLessons.lessons.length >= 1 && courseWithLessons?.status) {
         await Course.update({ published: 1 }, { where: { courseid } });
       } else {
         return res
@@ -273,14 +268,12 @@ export const unpublishCourse = async (req, res, next) => {
   const { teacherid, courseid } = req.params;
 
   try {
-    // Find the course and include its associated lessons
     const courseWithLessons = await Course.findOne({
       where: {
         teacherid,
         courseid,
       },
     });
-
     if (!courseWithLessons) {
       return res.status(404).json({ message: "Course not found" });
     } else {

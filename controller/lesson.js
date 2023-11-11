@@ -64,7 +64,7 @@ export const updateLesson = async (req, res, next) => {
   }
 };
 
-export const getTeachersLesson = async (req, res) => {
+export const getTeachersLesson = async (req, res, next) => {
   let { teacherid, courseid } = req.params;
   let doesUserExist = await Lesson.findOne({
     where: { teacherid, courseid },
@@ -87,5 +87,53 @@ export const getTeachersLesson = async (req, res) => {
       ],
     });
     res.status(200).send(lessons);
-  } catch (error) {}
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const deleteLesson = async (req, res, next) => {
+  let { lessonid } = req.params;
+
+  try {
+    let doesLessonExist = await Lesson.findOne({
+      where: { lessonid },
+      include: [
+        {
+          model: Course,
+          as: "course",
+          include: [
+            {
+              model: Lesson,
+              as: "lessons",
+            },
+          ],
+        },
+      ],
+    });
+
+    console.log(doesLessonExist);
+
+    if (!doesLessonExist) {
+      res.status(404).send({ message: "Lesson doesn't exist" });
+    } else {
+      await Lesson.destroy({ where: { lessonid } });
+
+      if (
+        doesLessonExist.quizadded === true &&
+        doesLessonExist.course?.status === true &&
+        doesLessonExist.course?.lessons.length === 1
+      ) {
+        // Update the course's published status to false
+        await Course.update(
+          { published: false },
+          { where: { courseid: doesLessonExist?.course?.courseid } }
+        );
+      }
+
+      res.status(200).send({ message: "Lesson deleted successfully" });
+    }
+  } catch (error) {
+    next(error);
+  }
 };
