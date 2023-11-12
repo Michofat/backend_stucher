@@ -1,3 +1,5 @@
+import { userModel } from "../user/user.js";
+
 export const enrollmentModel = (sequelize, DataTypes) => {
   const Enrollment = sequelize.define("enrollment", {
     enrollmentid: {

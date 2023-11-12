@@ -1,6 +1,7 @@
 import db from "../model/index.js";
 const Lesson = db.lesson;
 const Course = db.course;
+const Quiz = db.quiz;
 
 const User = db.user;
 export const createLesson = async (req, res, next) => {
@@ -83,6 +84,10 @@ export const getTeachersLesson = async (req, res, next) => {
           model: User,
           as: "user",
           attibutes: ["id"],
+        },
+        {
+          model: Quiz,
+          as: "quizzes",
         },
       ],
     });

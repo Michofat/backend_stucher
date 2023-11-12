@@ -2,6 +2,7 @@ import db from "../model/index.js";
 
 let Enroll = db.enrollment;
 let Course = db.course;
+let User = db.user;
 
 export const enrollFreeCourse = async (req, res, next) => {
   let { searcherid, courseid, teacherid } = req.params;
@@ -115,6 +116,12 @@ export const getCoursesEnrolled = async (req, res) => {
       {
         model: Course,
         as: "enroledcourse",
+        include: [
+          {
+            model: User,
+            as: "user",
+          },
+        ],
       },
     ],
   });

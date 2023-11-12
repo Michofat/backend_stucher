@@ -17,12 +17,49 @@ export const register = async (req, res, next) => {
 
 export const updateProfile = async (req, res, next) => {
   let { userid } = req.params;
-  let { firstname, surname, email, institution } = req.body;
+  let {
+    firstname,
+    surname,
+    email,
+    institution,
+    currencycode,
+    currencysymbol,
+    languagecode,
+    regioncode,
+    timezone,
+    devicebrand,
+    devicedesign,
+    devicename,
+    devicetype,
+    deviceyearclass,
+    devicemode,
+    devicemanufacturer,
+    devicemodeid,
+    devicemodelname,
+    deviceosversion,
+    devicetotalmemory,
+  } = req.body;
   const updates = {
     firstname,
     surname,
     email,
     institution,
+    currencycode,
+    currencysymbol,
+    languagecode,
+    regioncode,
+    timezone,
+    devicebrand,
+    devicedesign,
+    devicename,
+    devicetype,
+    deviceyearclass,
+    devicemode,
+    devicemanufacturer,
+    devicemodeid,
+    devicemodelname,
+    deviceosversion,
+    devicetotalmemory,
   };
   try {
     await User.update(updates, { where: { userid } });

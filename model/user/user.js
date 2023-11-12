@@ -29,7 +29,7 @@ export const userModel = (sequelize, DataTypes) => {
     },
     email: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
       unique: true,
       validate: {
         isEmail: {
@@ -82,6 +82,70 @@ export const userModel = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
       unique: true,
+    },
+    currencycode: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    currencysymbol: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    languagecode: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    regioncode: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    timezone: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    devicebrand: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    devicedesign: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    devicename: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    devicetype: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    deviceyearclass: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    devicemode: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    devicemanufacturer: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    devicemodeid: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    devicemodelname: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    deviceosversion: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    devicetotalmemory: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
   });
 

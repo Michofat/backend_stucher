@@ -68,6 +68,18 @@ db.course.belongsTo(db.user, {
 });
 //relationship between course and the teacherid
 
+//relationship between lessons and quiz
+db.lesson.hasMany(db.quiz, {
+  foreignKey: "lessonid",
+  onDelete: "CASCADE",
+});
+db.quiz.belongsTo(db.lesson, {
+  foreignKey: "lessonid",
+  as: "quizzes",
+  onDelete: "CASCADE",
+});
+//relationship between lessons and quiz
+
 //relationship between course and the enrolled
 db.course.hasMany(db.enrollment, {
   foreignKey: "courseid",
