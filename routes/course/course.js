@@ -6,7 +6,9 @@ import {
   getCourseDetails,
   getSingleTeachersCourse,
   getTeachersCourses,
+  monitizeCourse,
   publishCourse,
+  searchCourses,
   unpublishCourse,
   updateCourse,
 } from "../../controller/course.js";
@@ -24,5 +26,7 @@ routes.get("/coursedetails/:courseid", getCourseDetails);
 routes.get("/courses", getAllCourses);
 routes.post("/publishcourse/:teacherid/:courseid", publishCourse);
 routes.patch("/unpublishcourse/:teacherid/:courseid", unpublishCourse);
+routes.patch("/monitizecourse/:teacherid/:courseid", monitizeCourse);
+routes.get(`/searchcourses`, searchCourses);
 
 export default routes;

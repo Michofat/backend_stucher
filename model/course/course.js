@@ -46,6 +46,26 @@ export const courseModel = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
+    localcurrency: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    country: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    localamount: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    dollaramount: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    monitize: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
   });
 
   return Course;

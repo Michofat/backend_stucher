@@ -1,3 +1,4 @@
+import { Op } from "sequelize";
 import db from "../model/index.js";
 const Course = db.course;
 const User = db.user;
@@ -142,6 +143,8 @@ export const getSingleTeachersCourse = async (req, res) => {
   try {
     if (!doesExist) {
       res.status(404).send({ message: "doesnt exist" });
+    } else if (doesExist.status === false) {
+      res.status(404).send({ message: "course has been unpublished" });
     }
     const courses = await Course.findOne({
       where: {
@@ -168,6 +171,10 @@ export const getCourseDetails = async (req, res) => {
   try {
     if (!doesExist) {
       res.status(404).send({ message: "course doesnt exist" });
+    } else if (doesExist.status === false) {
+      res
+        .status(404)
+        .send({ message: "cant view course that has been unpublished" });
     }
     const course = await Course.findOne({
       where: {
@@ -185,9 +192,11 @@ export const getCourseDetails = async (req, res) => {
   } catch (error) {}
 };
 
-export const getAllCourses = async (req, res) => {
+export const getAllCourses = async (req, res, error) => {
   try {
     const courses = await Course.findAll({
+      order: [["createdAt", "DESC"]],
+      where: { status: true },
       include: [
         {
           model: User,
@@ -197,7 +206,9 @@ export const getAllCourses = async (req, res) => {
       ],
     });
     res.status(200).send(courses);
-  } catch (error) {}
+  } catch (error) {
+    next(error);
+  }
 };
 
 export const getTeachersCourses = async (req, res, next) => {
@@ -205,8 +216,10 @@ export const getTeachersCourses = async (req, res, next) => {
 
   try {
     const courseWithLessons = await Course.findAll({
+      order: [["createdAt", "DESC"]],
       where: {
         teacherid,
+        status: true,
       },
       include: [
         {
@@ -274,14 +287,92 @@ export const unpublishCourse = async (req, res, next) => {
         courseid,
       },
     });
+    console.log(courseWithLessons);
     if (!courseWithLessons) {
       return res.status(404).json({ message: "Course not found" });
     } else {
-      await Course.update({ published: 0 }, { where: { courseid } });
-      return res
-        .status(200)
-        .json({ message: "course unpublished successfully" });
+      if (courseWithLessons.published === true) {
+        await Course.update({ published: 0 }, { where: { courseid } });
+        return res
+          .status(200)
+          .json({ message: "course unpublished successfully" });
+      } else {
+        return res
+          .status(404)
+          .json({ message: "course has already been unpublished" });
+      }
     }
+  } catch (error) {
+    next(error);
+  }
+};
+export const monitizeCourse = async (req, res, next) => {
+  let { courseid, teacherid } = req.params;
+  const doesCourseExist = await Course.findOne({
+    where: {
+      courseid,
+      teacherid,
+    },
+  });
+  let { localcurrency, localamount, dollaramount, country } = req.body;
+  const courseupdates = {
+    localcurrency,
+    localamount,
+    dollaramount,
+    country,
+    monitize: true,
+  };
+  try {
+    if (doesCourseExist) {
+      await Course.update(courseupdates, {
+        where: { courseid, teacherid },
+      });
+    } else {
+      return res.status(404).send({
+        message: "error updating resources",
+      });
+    }
+    return res.status(200).send({
+      message: "course monitized successfully",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+export const searchCourses = async (req, res, next) => {
+  const { title, description } = req.query;
+  const searchParams = {
+    title,
+    description,
+  };
+
+  try {
+    const courses = await Course.findAll({
+      order: [["createdAt", "DESC"]],
+      where: {
+        [Op.and]: [
+          {
+            [Op.and]: [
+              {
+                title: {
+                  [Op.like]: `%${searchParams.title}%`,
+                },
+              },
+              {
+                description: {
+                  [Op.like]: `%${searchParams.description}%`,
+                },
+              },
+              {
+                status: true,
+              },
+            ],
+          },
+        ],
+      },
+    });
+
+    res.status(200).send(courses);
   } catch (error) {
     next(error);
   }

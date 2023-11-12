@@ -112,8 +112,6 @@ export const deleteLesson = async (req, res, next) => {
       ],
     });
 
-    console.log(doesLessonExist);
-
     if (!doesLessonExist) {
       res.status(404).send({ message: "Lesson doesn't exist" });
     } else {
