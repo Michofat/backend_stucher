@@ -76,6 +76,7 @@ db.course.hasMany(db.enrollment, {
 db.enrollment.belongsTo(db.course, {
   foreignKey: "courseid",
   onDelete: "CASCADE",
+  as: "enroledcourse",
 });
 //relationship between course and the enrolled
 
