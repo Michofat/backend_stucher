@@ -3,6 +3,7 @@ import db from "../model/index.js";
 const Course = db.course;
 const User = db.user;
 const Lesson = db.lesson;
+const Enroll = db.enrollment;
 
 export const createCourse = async (req, res, next) => {
   let { teacherid } = req.params;
@@ -48,6 +49,7 @@ export const updateCourse = async (req, res, next) => {
     imagelink,
     introductoryvideolink,
     courseimage,
+    monitize,
   } = req.body;
   const courseupdates = {
     title,
@@ -56,6 +58,7 @@ export const updateCourse = async (req, res, next) => {
     imagelink,
     introductoryvideolink,
     courseimage,
+    monitize,
   };
   try {
     if (doesCourseExist) {
@@ -155,7 +158,12 @@ export const getSingleTeachersCourse = async (req, res) => {
         {
           model: User,
           as: "user",
-          attibutes: ["id"],
+          attributes: ["userid", "firstname", "surname"],
+        },
+        {
+          model: Enroll,
+          as: "enrollments",
+          attributes: ["enrollmentid", "courseid", "studentid"],
         },
       ],
     });
@@ -184,7 +192,12 @@ export const getCourseDetails = async (req, res) => {
         {
           model: User,
           as: "user",
-          attibutes: ["id"],
+          attributes: ["userid", "firstname", "surname"],
+        },
+        {
+          model: Enroll,
+          as: "enrollments",
+          attributes: ["enrollmentid", "courseid", "studentid"],
         },
       ],
     });
@@ -192,7 +205,7 @@ export const getCourseDetails = async (req, res) => {
   } catch (error) {}
 };
 
-export const getAllCourses = async (req, res, error) => {
+export const getAllCourses = async (req, res, next) => {
   try {
     const courses = await Course.findAll({
       order: [["createdAt", "DESC"]],
@@ -201,7 +214,12 @@ export const getAllCourses = async (req, res, error) => {
         {
           model: User,
           as: "user",
-          attibutes: ["id"],
+          attributes: ["userid", "firstname", "surname"],
+        },
+        {
+          model: Enroll,
+          as: "enrollments",
+          attributes: ["enrollmentid", "courseid", "studentid"],
         },
       ],
     });
@@ -245,7 +263,8 @@ export const getTeachersCourses = async (req, res, next) => {
 
 export const publishCourse = async (req, res, next) => {
   const { teacherid, courseid } = req.params;
-
+  let { monitize, localcurrency, localamount, dollaramount, country } =
+    req.body;
   try {
     // Find the course and include its associated lessons
     const courseWithLessons = await Course.findOne({
@@ -264,7 +283,17 @@ export const publishCourse = async (req, res, next) => {
       return res.status(404).json({ message: "Course not found" });
     } else {
       if (courseWithLessons.lessons.length >= 1 && courseWithLessons?.status) {
-        await Course.update({ published: 1 }, { where: { courseid } });
+        await Course.update(
+          {
+            published: 1,
+            localcurrency,
+            localamount,
+            dollaramount,
+            country,
+            monitize,
+          },
+          { where: { courseid } }
+        );
       } else {
         return res
           .status(404)
@@ -370,6 +399,18 @@ export const searchCourses = async (req, res, next) => {
           },
         ],
       },
+      include: [
+        {
+          model: User,
+          as: "user",
+          attributes: ["userid", "firstname", "surname"],
+        },
+        {
+          model: Enroll,
+          as: "enrollments",
+          attributes: ["enrollmentid", "courseid", "studentid"],
+        },
+      ],
     });
 
     res.status(200).send(courses);

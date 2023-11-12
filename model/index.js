@@ -4,6 +4,7 @@ import { userModel } from "./user/user.js";
 import { courseModel } from "./course/course.js";
 import { lessonModel } from "./lesson/lesson.js";
 import { quizModel } from "./quiz/quiz.js";
+import { enrollmentModel } from "./enrollment/enrollment.js";
 
 export const sequelize = new Sequelize(
   dbConn.DB,
@@ -35,6 +36,7 @@ db.user = userModel(sequelize, DataTypes);
 db.course = courseModel(sequelize, DataTypes);
 db.lesson = lessonModel(sequelize, DataTypes);
 db.quiz = quizModel(sequelize, DataTypes);
+db.enrollment = enrollmentModel(sequelize, DataTypes);
 
 db.sequelize.sync({ force: false }).then(() => {
   console.log("yes re-sync done!!");
@@ -54,6 +56,7 @@ db.sequelize.sync({ force: false }).then(() => {
 //   console.log("Hard reset done!!");
 // });  "CASCADE",
 
+//relationship between course and the teacherid
 db.user.hasMany(db.course, {
   foreignKey: "teacherid",
   onDelete: "CASCADE",
@@ -63,6 +66,18 @@ db.course.belongsTo(db.user, {
   as: "user",
   onDelete: "CASCADE",
 });
+//relationship between course and the teacherid
+
+//relationship between course and the enrolled
+db.course.hasMany(db.enrollment, {
+  foreignKey: "courseid",
+  onDelete: "CASCADE",
+});
+db.enrollment.belongsTo(db.course, {
+  foreignKey: "courseid",
+  onDelete: "CASCADE",
+});
+//relationship between course and the enrolled
 
 db.course.hasMany(db.lesson, {
   foreignKey: "courseid",
