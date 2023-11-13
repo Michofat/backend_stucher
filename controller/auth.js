@@ -2,10 +2,11 @@ import db from "../model/index.js";
 const User = db.user;
 
 export const register = async (req, res, next) => {
-  let { phonenumber } = req.body;
+  let { phonenumber, email } = req.body;
   try {
     await User.create({
       phonenumber,
+      email,
     });
     return res.status(201).send({
       message: "registration successful",
