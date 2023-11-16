@@ -9,6 +9,7 @@ import enrollRoutes from "./routes/enroll/enroll.js";
 import cors from "cors";
 import bodyParser from "body-parser";
 import { errorHandler } from "./error/error.js";
+import e from "express";
 
 const app = express();
 app.use(
@@ -33,6 +34,17 @@ app.use("/", testRoutes);
 //error
 app.use(errorHandler);
 
-app.listen(4000, () => console.log(`server is running on port 8000`));
+app.listen(7000, () => console.log(`server is running on port 6000`));
 
 export default app;
+function missingNumber(nums) {
+  const n = nums.length;
+  const result = [];
+  for (let i = 0; i <= n; i++) {
+    result.push(i);
+  }
+  return result;
+}
+
+const nums = [9, 6, 4, 2, 3, 5, 7, 0, 1];
+console.log(missingNumber(nums));

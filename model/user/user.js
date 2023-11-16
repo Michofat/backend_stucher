@@ -37,8 +37,12 @@ export const userModel = (sequelize, DataTypes) => {
         },
       },
     },
+    actcode: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
     phonenumber: {
-      type: DataTypes.STRING(14),
+      type: DataTypes.STRING(20),
       allowNull: false,
       unique: true,
       validate: {
