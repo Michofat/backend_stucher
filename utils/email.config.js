@@ -24,9 +24,9 @@ export const sendActivationEmail = (email, phonenumber, activationCode) => {
       sendMail(email, phonenumber, activationCode),
       (error, info) => {
         if (error) {
-          reject(error); // Reject with the error
+          reject(error);
         } else {
-          resolve(info.response); // Resolve with the response
+          resolve(info.response);
         }
       }
     );

@@ -5,44 +5,36 @@ import { sendActivationEmail } from "../utils/email.config.js";
 const User = db.user;
 
 export const register = async (req, res, next) => {
-  let { email, phonenumber } = req.body;
+  let { phonenumber } = req.body;
   const isValidPhoneNumber = validatePhoneNumber(phonenumber);
 
-  const emailexist = await User.findOne({
-    where: {
-      email,
-    },
-  });
   const phonenumberexist = await User.findOne({
     where: {
       phonenumber,
     },
   });
   try {
-    if (!phonenumber || !email) {
+    if (!phonenumber) {
       return res.status(404).send({
         message: "please complete the field",
       });
-    } else if (emailexist || phonenumberexist) {
+    } else if (phonenumberexist) {
       return res.status(404).send({
-        message: "email or phone number already exists",
+        message: "phone number already exists",
       });
     } else if (!isValidPhoneNumber) {
       return res.status(404).send({
         message: "phone number not valid",
       });
     } else {
-      if (phonenumber && email) {
+      if (phonenumber) {
         let randomdigit = randomNumber();
-        await sendActivationEmail(email, phonenumber, randomdigit);
         const response = await axios.post(
           `https://termii.com/api/sms/send?to=${phonenumber}&from=N-Alert&sms=Your Michofat confirmation code for Stuther App is ${randomdigit}. It expires in 30 minutes&type=plain&channel=generic&api_key=TLb0sqAbAGo46iyz4ZhRtjbQ988I5tR4UDRdYukeD6aKVidegXv0bvZCFDKf3P`
         );
         if (response.status === 200) {
-          sendActivationEmail(email, phonenumber, randomdigit);
           await User.create({
             phonenumber,
-            email,
             actcode: randomdigit,
           });
           return res.status(200).send({
