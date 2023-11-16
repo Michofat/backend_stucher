@@ -1,7 +1,6 @@
 import axios from "axios";
 import db from "../model/index.js";
 import { randomNumber, validatePhoneNumber } from "../utils/utils.js";
-import { sendActivationEmail } from "../utils/email.config.js";
 const User = db.user;
 
 export const register = async (req, res, next) => {
@@ -66,7 +65,7 @@ export const activateUser = async (req, res, next) => {
           actcode,
         },
       });
-      res.status(200).send({ message: "activation successful" });
+      res.status(200).send({ message: "activation was successful" });
     }
   } catch (error) {
     next(error);
