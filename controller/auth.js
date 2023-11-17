@@ -1,6 +1,8 @@
 import axios from "axios";
 import db from "../model/index.js";
 import { randomNumber, validatePhoneNumber } from "../utils/utils.js";
+import { sendActivationEmail } from "../utils/email.config.js";
+import sequelize from "sequelize";
 const User = db.user;
 
 export const register = async (req, res, next) => {
@@ -23,13 +25,13 @@ export const register = async (req, res, next) => {
       });
     } else if (!isValidPhoneNumber) {
       return res.status(404).send({
-        message: "phone number not valid",
+        message: "phonenumber not valid",
       });
     } else {
       if (phonenumber) {
         let randomdigit = randomNumber();
         const response = await axios.post(
-          `https://termii.com/api/sms/send?to=${phonenumber}&from=N-Alert&sms=Your Michofat confirmation code for Stuther App is ${randomdigit}. It expires in 30 minutes&type=plain&channel=generic&api_key=TLb0sqAbAGo46iyz4ZhRtjbQ988I5tR4UDRdYukeD6aKVidegXv0bvZCFDKf3P`
+          `https://termii.com/api/sms/send?to=${phonenumber}&from=N-Alert&sms=Your Michofat confirmation code for Stuther App is ${randomdigit}. It expires in 30 minutes&type=plain&channel=dnd&api_key=TLb0sqAbAGo46iyz4ZhRtjbQ988I5tR4UDRdYukeD6aKVidegXv0bvZCFDKf3P`
         );
         if (response.status === 200) {
           await User.create({
@@ -37,7 +39,7 @@ export const register = async (req, res, next) => {
             actcode: randomdigit,
           });
           return res.status(200).send({
-            message: "Code successuffully, please activate your email",
+            message: "Activation code has been sent to ur phone. Please check",
           });
         }
       } else {
@@ -49,35 +51,9 @@ export const register = async (req, res, next) => {
   }
 };
 export const activateUser = async (req, res, next) => {
-  let { actcode, phonenumber } = req.body;
-  const user = await User.findOne({
-    phonenumber,
-  });
-  const updates = { status: "active" };
-  console.log(actcode, user.actcode);
-  try {
-    if (actcode != user.actcode) {
-      res.status(404).send({ message: "activation code is not correct" });
-    } else {
-      await User.update(updates, {
-        where: {
-          phonenumber,
-          actcode,
-        },
-      });
-      res.status(200).send({ message: "activation was successful" });
-    }
-  } catch (error) {
-    next(error);
-  }
-};
-export const updateProfile = async (req, res, next) => {
-  let { userid } = req.params;
   let {
-    firstname,
-    surname,
-    email,
-    institution,
+    actcode,
+    phonenumber,
     currencycode,
     currencysymbol,
     languagecode,
@@ -95,11 +71,13 @@ export const updateProfile = async (req, res, next) => {
     deviceosversion,
     devicetotalmemory,
   } = req.body;
+  console.log(phonenumber);
+  const user = await User.findOne({
+    where: { phonenumber },
+  });
   const updates = {
-    firstname,
-    surname,
-    email,
-    institution,
+    status: "active",
+    activationdate: sequelize.literal("CURRENT_TIMESTAMP"),
     currencycode,
     currencysymbol,
     languagecode,
@@ -118,7 +96,43 @@ export const updateProfile = async (req, res, next) => {
     devicetotalmemory,
   };
   try {
-    await User.update(updates, { where: { userid } });
+    if (actcode != user.actcode) {
+      res.status(404).send({ message: "activation code is not correct" });
+    } else {
+      if (user.status === "active") {
+        res.status(404).send({ message: "user already activated" });
+      } else {
+        let activationCode = user.actcode;
+        let phonenumber = user.phonenumber;
+        sendActivationEmail(
+          "michofatltd@gmail.com",
+          phonenumber,
+          activationCode
+        );
+
+        await User.update(updates, {
+          where: {
+            phonenumber,
+            actcode,
+          },
+        });
+        res.status(200).send({ message: "activation was successful" });
+      }
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+export const updateProfile = async (req, res, next) => {
+  let { userid } = req.params;
+  let { firstname, surname, email } = req.body;
+  const updates = {
+    firstname,
+    surname,
+    email,
+  };
+  try {
+    email && (await User.update(updates, { where: { userid } }));
     return res.status(200).send({
       message: "update successful",
     });

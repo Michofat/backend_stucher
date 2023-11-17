@@ -54,6 +54,10 @@ export const userModel = (sequelize, DataTypes) => {
         },
       },
     },
+    activationdate: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
     profilepicture: {
       type: DataTypes.STRING,
       allowNull: true,
