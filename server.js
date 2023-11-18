@@ -9,7 +9,7 @@ import enrollRoutes from "./routes/enroll/enroll.js";
 import cors from "cors";
 import bodyParser from "body-parser";
 import { errorHandler } from "./error/error.js";
-import e from "express";
+import express from "express";
 
 const app = express();
 app.use(
