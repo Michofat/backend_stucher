@@ -1,6 +1,7 @@
 import express from "express";
 import {
   activateUser,
+  getPhoneDetails,
   register,
   updateProfile,
   updateProfilePicture,
@@ -13,5 +14,6 @@ routes.post("/register", register);
 routes.post("/activateuser", activateUser);
 routes.patch("/updateProfile/:userid", updateProfile);
 routes.patch("/updateProfilePicture/:userid", updateProfilePicture);
+routes.post("/details", getPhoneDetails);
 
 export default routes;

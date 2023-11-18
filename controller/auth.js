@@ -155,3 +155,13 @@ export const updateProfilePicture = async (req, res, next) => {
     next(error);
   }
 };
+export const getPhoneDetails = async (req, res, next) => {
+  let { phonenumber } = req.body;
+
+  try {
+    let user = await User.findOne({ where: { phonenumber } });
+    return res.status(200).send(user);
+  } catch (error) {
+    next(error);
+  }
+};
