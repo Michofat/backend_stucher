@@ -125,14 +125,16 @@ export const activateUser = async (req, res, next) => {
 };
 export const updateProfile = async (req, res, next) => {
   let { userid } = req.params;
-  let { firstname, surname, email } = req.body;
+  console.log(userid);
+  let { firstname, surname, email, institution } = req.body;
   const updates = {
     firstname,
     surname,
     email,
+    institution,
   };
   try {
-    email && (await User.update(updates, { where: { userid } }));
+    await User.update(updates, { where: { userid } });
     return res.status(200).send({
       message: "update successful",
     });
