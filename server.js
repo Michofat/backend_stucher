@@ -8,6 +8,7 @@ import enrollRoutes from "./routes/enroll/enroll.js";
 import cors from "cors";
 import bodyParser from "body-parser";
 import { errorHandler } from "./error/error.js";
+import dotenv from "dotenv";
 
 const app = express();
 app.use(
@@ -20,6 +21,9 @@ app.use(
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+dotenv.config();
+
+let PORT = process.env.PORT;
 
 //routes
 app.use("/mobile/v1", authRoutes);
@@ -32,6 +36,6 @@ app.use("/", testRoutes);
 //error
 app.use(errorHandler);
 
-app.listen(6000, () => console.log(`server is running on port 6000`));
+app.listen(PORT, () => console.log(`server is running on port 6000`));
 
 export default app;
