@@ -3,6 +3,7 @@ import db from "../model/index.js";
 import { randomNumber, validatePhoneNumber } from "../utils/utils.js";
 import { sendActivationEmail } from "../utils/email.config.js";
 import sequelize from "sequelize";
+import moment from "moment";
 const User = db.user;
 
 export const register = async (req, res, next) => {
@@ -71,13 +72,12 @@ export const activateUser = async (req, res, next) => {
     deviceosversion,
     devicetotalmemory,
   } = req.body;
-  console.log(phonenumber);
   const user = await User.findOne({
     where: { phonenumber },
   });
   const updates = {
     status: "active",
-    activationdate: sequelize.literal("CURRENT_TIMESTAMP"),
+    activationdate: moment().format("YYYY-MM-DD HH:mm:ss"),
     currencycode,
     currencysymbol,
     languagecode,
@@ -100,7 +100,7 @@ export const activateUser = async (req, res, next) => {
       res.status(404).send({ message: "activation code is not correct" });
     } else {
       if (user.status === "active") {
-        res.status(404).send({ message: "user already activated" });
+        res.status(200).send({ message: "user already activated" });
       } else {
         let activationCode = user.actcode;
         let phonenumber = user.phonenumber;
