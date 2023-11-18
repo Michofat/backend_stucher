@@ -5,11 +5,9 @@ import courseRoutes from "./routes/course/course.js";
 import lessonRoutes from "./routes/lesson/lesson.js";
 import quizRoutes from "./routes/quiz/quiz.js";
 import enrollRoutes from "./routes/enroll/enroll.js";
-
 import cors from "cors";
 import bodyParser from "body-parser";
 import { errorHandler } from "./error/error.js";
-import express from "express";
 
 const app = express();
 app.use(
