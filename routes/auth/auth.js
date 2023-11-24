@@ -1,7 +1,7 @@
 import express from "express";
 import {
   activateUser,
-  getPhoneDetails,
+  getUserDetails,
   register,
   updateProfile,
   updateProfilePicture,
@@ -12,8 +12,8 @@ const routes = express.Router({
 
 routes.post("/register", register);
 routes.post("/activateuser", activateUser);
-routes.patch("/updateProfile/:userid", updateProfile);
-routes.patch("/updateProfilePicture/:userid", updateProfilePicture);
-routes.post("/details", getPhoneDetails);
+routes.patch("/updateprofile/:userid", updateProfile);
+routes.patch("/updateprofilepicture/:userid", updateProfilePicture);
+routes.post("/details", getUserDetails);
 
 export default routes;

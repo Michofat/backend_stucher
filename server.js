@@ -36,6 +36,6 @@ app.use("/", testRoutes);
 //error
 app.use(errorHandler);
 
-app.listen(PORT, () => console.log(`server is running on port 6000`));
+app.listen(7000, () => console.log(`server is running on port 7000`));
 
 export default app;

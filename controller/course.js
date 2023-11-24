@@ -7,27 +7,20 @@ const Enroll = db.enrollment;
 
 export const createCourse = async (req, res, next) => {
   let { teacherid } = req.params;
-  let {
-    title,
-    description,
-    videolink,
-    imagelink,
-    introductoryvideolink,
-    courseimage,
-  } = req.body;
+  let { title, description, coursecode, introductoryvideolink } = req.body;
   const courses = {
     teacherid,
     title,
     description,
-    videolink,
-    imagelink,
+    coursecode,
     introductoryvideolink,
-    courseimage,
   };
   try {
-    await Course.create(courses);
+    let results = await Course.create(courses);
+    console.log(results);
     return res.status(201).send({
-      message: "course created successfully",
+      id: results.courseid,
+      title: results.title,
     });
   } catch (error) {
     next(error);

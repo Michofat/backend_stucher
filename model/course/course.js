@@ -22,11 +22,7 @@ export const courseModel = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    videolink: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    imagelink: {
+    coursecode: {
       type: DataTypes.STRING,
       allowNull: true,
     },
@@ -35,10 +31,6 @@ export const courseModel = (sequelize, DataTypes) => {
       defaultValue: true,
     },
     introductoryvideolink: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    courseimage: {
       type: DataTypes.STRING,
       allowNull: true,
     },
@@ -53,6 +45,11 @@ export const courseModel = (sequelize, DataTypes) => {
     country: {
       type: DataTypes.STRING,
       allowNull: true,
+    },
+    courseicon: {
+      type: DataTypes.STRING,
+      defaultValue:
+        "https://cdn.vectorstock.com/i/1000x1000/29/55/credit-card-icon-vector-20052955.webp",
     },
     localamount: {
       type: DataTypes.INTEGER,

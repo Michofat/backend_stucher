@@ -21,7 +21,7 @@ export const register = async (req, res, next) => {
         message: "please complete the field",
       });
     } else if (phonenumberexist) {
-      return res.status(404).send({
+      return res.status(200).send({
         message: "phone number already exists",
       });
     } else if (!isValidPhoneNumber) {
@@ -75,6 +75,7 @@ export const activateUser = async (req, res, next) => {
   const user = await User.findOne({
     where: { phonenumber },
   });
+  console.log(phonenumber, actcode);
   const updates = {
     status: "active",
     activationdate: moment().format("YYYY-MM-DD HH:mm:ss"),
@@ -125,7 +126,6 @@ export const activateUser = async (req, res, next) => {
 };
 export const updateProfile = async (req, res, next) => {
   let { userid } = req.params;
-  console.log(userid);
   let { firstname, surname, email, institution } = req.body;
   const updates = {
     firstname,
@@ -145,8 +145,10 @@ export const updateProfile = async (req, res, next) => {
 export const updateProfilePicture = async (req, res, next) => {
   let { userid } = req.params;
   let { profilepicture } = req.body;
+  console.log(profilepicture, userid);
   const update = {
     profilepicture,
+    onboarded: true,
   };
   try {
     await User.update(update, { where: { userid } });
@@ -157,12 +159,16 @@ export const updateProfilePicture = async (req, res, next) => {
     next(error);
   }
 };
-export const getPhoneDetails = async (req, res, next) => {
+export const getUserDetails = async (req, res, next) => {
   let { phonenumber } = req.body;
-
+  console.log(phonenumber);
   try {
     let user = await User.findOne({ where: { phonenumber } });
-    return res.status(200).send(user);
+    if (user) {
+      return res.status(200).send(user);
+    } else {
+      return res.status(404).send({ message: "user doesnt exist" });
+    }
   } catch (error) {
     next(error);
   }

@@ -12,8 +12,8 @@ export const userModel = (sequelize, DataTypes) => {
       allowNull: true,
       validate: {
         len: {
-          args: [3, 30],
-          msg: "firstname must be between 3 and 30 characters",
+          args: [2, 30],
+          msg: "firstname must be between 2 and 30 characters",
         },
       },
     },
@@ -22,8 +22,8 @@ export const userModel = (sequelize, DataTypes) => {
       allowNull: true,
       validate: {
         len: {
-          args: [4, 20],
-          msg: "surname must be between 3 and 30 characters",
+          args: [2, 30],
+          msg: "surname must be between 2 and 30 characters",
         },
       },
     },
@@ -34,6 +34,10 @@ export const userModel = (sequelize, DataTypes) => {
       validate: {
         isEmail: {
           msg: "Please provide a valid email address",
+        },
+        len: {
+          args: [13, 70],
+          msg: "email must be between 13 and 70 characters",
         },
       },
     },
@@ -65,6 +69,12 @@ export const userModel = (sequelize, DataTypes) => {
     institution: {
       type: DataTypes.STRING,
       allowNull: true,
+      validate: {
+        len: {
+          args: [2, 100],
+          msg: "institution must be between 2 and 100 characters",
+        },
+      },
     },
     status: {
       type: DataTypes.ENUM,
@@ -154,6 +164,11 @@ export const userModel = (sequelize, DataTypes) => {
     devicetotalmemory: {
       type: DataTypes.STRING,
       allowNull: true,
+    },
+    onboarded: {
+      type: DataTypes.ENUM,
+      defaultValue: false,
+      values: [true, false],
     },
   });
 
