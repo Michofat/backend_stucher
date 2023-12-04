@@ -42,10 +42,11 @@ export const courseModel = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    country: {
+    courseimage: {
       type: DataTypes.STRING,
       allowNull: true,
     },
+
     courseicon: {
       type: DataTypes.STRING,
       defaultValue:
@@ -59,7 +60,7 @@ export const courseModel = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    monitize: {
+    monetize: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },

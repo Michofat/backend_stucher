@@ -7,13 +7,15 @@ const Enroll = db.enrollment;
 
 export const createCourse = async (req, res, next) => {
   let { teacherid } = req.params;
-  let { title, description, coursecode, introductoryvideolink } = req.body;
+  let { title, description, coursecode, introductoryvideolink, courseimage } =
+    req.body;
   const courses = {
     teacherid,
     title,
     description,
     coursecode,
     introductoryvideolink,
+    courseimage,
   };
   try {
     let results = await Course.create(courses);
@@ -23,6 +25,7 @@ export const createCourse = async (req, res, next) => {
       title: results.title,
     });
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };
@@ -146,6 +149,8 @@ export const getSingleTeachersCourse = async (req, res) => {
       where: {
         teacherid,
         courseid,
+        published: true,
+        status: true,
       },
       include: [
         {
@@ -185,7 +190,7 @@ export const getCourseDetails = async (req, res) => {
         {
           model: User,
           as: "user",
-          attributes: ["userid", "firstname", "surname"],
+          attributes: ["userid", "firstname", "surname", "profilepicture"],
         },
         {
           model: Enroll,
@@ -194,6 +199,9 @@ export const getCourseDetails = async (req, res) => {
         },
       ],
     });
+    const numberOfStudents = course.enrollments.length;
+
+    course.dataValues.enrollmentcount = numberOfStudents;
     res.status(200).send(course);
   } catch (error) {}
 };
@@ -202,12 +210,12 @@ export const getAllCourses = async (req, res, next) => {
   try {
     const courses = await Course.findAll({
       order: [["createdAt", "DESC"]],
-      where: { status: true },
+      where: { status: true, published: true },
       include: [
         {
           model: User,
           as: "user",
-          attributes: ["userid", "firstname", "surname"],
+          attributes: ["userid", "firstname", "surname", "profilepicture"],
         },
         {
           model: Enroll,
@@ -216,8 +224,10 @@ export const getAllCourses = async (req, res, next) => {
         },
       ],
     });
+
     res.status(200).send(courses);
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };
@@ -230,6 +240,7 @@ export const getTeachersCourses = async (req, res, next) => {
       order: [["createdAt", "DESC"]],
       where: {
         teacherid,
+        published: true,
         status: true,
       },
       include: [
@@ -256,8 +267,10 @@ export const getTeachersCourses = async (req, res, next) => {
 
 export const publishCourse = async (req, res, next) => {
   const { teacherid, courseid } = req.params;
-  let { monitize, localcurrency, localamount, dollaramount, country } =
+  console.log(teacherid, courseid);
+  let { monetize, localcurrency, localamount, dollaramount, country } =
     req.body;
+  console.log(courseid);
   try {
     // Find the course and include its associated lessons
     const courseWithLessons = await Course.findOne({
@@ -283,7 +296,7 @@ export const publishCourse = async (req, res, next) => {
             localamount,
             dollaramount,
             country,
-            monitize,
+            monetize,
           },
           { where: { courseid } }
         );
@@ -295,6 +308,7 @@ export const publishCourse = async (req, res, next) => {
     }
     return res.status(200).json({ message: "course published successfully" });
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };

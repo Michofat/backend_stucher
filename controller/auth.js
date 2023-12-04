@@ -8,6 +8,7 @@ const User = db.user;
 
 export const register = async (req, res, next) => {
   let { phonenumber } = req.body;
+  console.log(phonenumber);
   const isValidPhoneNumber = validatePhoneNumber(phonenumber);
 
   const phonenumberexist = await User.findOne({
@@ -21,7 +22,7 @@ export const register = async (req, res, next) => {
         message: "please complete the field",
       });
     } else if (phonenumberexist) {
-      return res.status(200).send({
+      return res.status(404).send({
         message: "phone number already exists",
       });
     } else if (!isValidPhoneNumber) {
@@ -39,12 +40,13 @@ export const register = async (req, res, next) => {
             phonenumber,
             actcode: randomdigit,
           });
-          return res.status(200).send({
-            message: "Activation code has been sent to ur phone. Please check",
+          return res.status(201).send({
+            message:
+              "Activation code has been sent to your phone. Please check",
           });
         }
       } else {
-        return res.status(200).send({ message: "unable to send OTP code" });
+        return res.status(404).send({ message: "unable to send OTP code" });
       }
     }
   } catch (error) {
@@ -75,9 +77,8 @@ export const activateUser = async (req, res, next) => {
   const user = await User.findOne({
     where: { phonenumber },
   });
-  console.log(phonenumber, actcode);
+  // console.log(phonenumber, actcode);
   const updates = {
-    status: "active",
     activationdate: moment().format("YYYY-MM-DD HH:mm:ss"),
     currencycode,
     currencysymbol,
@@ -99,26 +100,20 @@ export const activateUser = async (req, res, next) => {
   try {
     if (actcode != user.actcode) {
       res.status(404).send({ message: "activation code is not correct" });
+    } else if (!actcode) {
+      res.status(404).send({ message: "pls input activation code" });
     } else {
-      if (user.status === "active") {
-        res.status(200).send({ message: "user already activated" });
-      } else {
-        let activationCode = user.actcode;
-        let phonenumber = user.phonenumber;
-        sendActivationEmail(
-          "michofatltd@gmail.com",
-          phonenumber,
-          activationCode
-        );
+      let activationCode = user.actcode;
+      let phonenumber = user.phonenumber;
+      // sendActivationEmail("michofatltd@gmail.com", phonenumber, activationCode);
 
-        await User.update(updates, {
-          where: {
-            phonenumber,
-            actcode,
-          },
-        });
-        res.status(200).send({ message: "activation was successful" });
-      }
+      await User.update(updates, {
+        where: {
+          phonenumber,
+          actcode,
+        },
+      });
+      res.status(200).send({ message: "activation was successful" });
     }
   } catch (error) {
     next(error);
@@ -148,6 +143,7 @@ export const updateProfilePicture = async (req, res, next) => {
   console.log(profilepicture, userid);
   const update = {
     profilepicture,
+    status: "active",
     onboarded: true,
   };
   try {

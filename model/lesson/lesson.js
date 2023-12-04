@@ -7,12 +7,17 @@ export const lessonModel = (sequelize, DataTypes) => {
     },
     courseid: {
       type: DataTypes.UUID,
+      allowNull: false,
     },
     teacherid: {
       type: DataTypes.UUID,
       allowNull: false,
     },
     title: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    duration: {
       type: DataTypes.STRING,
       allowNull: false,
     },

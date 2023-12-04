@@ -17,10 +17,7 @@ export const enrollmentModel = (sequelize, DataTypes) => {
       type: DataTypes.UUID,
       allowNull: false,
     },
-    teacherid: {
-      type: DataTypes.UUID,
-      allowNull: false,
-    },
+
     currency: {
       type: DataTypes.STRING,
       allowNull: true,

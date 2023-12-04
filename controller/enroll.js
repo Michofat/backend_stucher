@@ -5,11 +5,12 @@ let Course = db.course;
 let User = db.user;
 
 export const enrollFreeCourse = async (req, res, next) => {
-  let { searcherid, courseid, teacherid } = req.params;
+  let { searcherid, courseid } = req.params;
+  console.log(searcherid, courseid);
   let { currency, amountpaid } = req.body;
   let doesCourseExist = await Course.findOne({ where: { courseid } });
+  console.log(doesCourseExist);
   const enrollcourse = {
-    teacherid,
     studentid: searcherid,
     currency,
     amountpaid,
@@ -36,6 +37,11 @@ export const enrollFreeCourse = async (req, res, next) => {
         return res.status(404).send({
           message: "you cant freely enroll for a paid course",
         });
+      }
+      if (doesCourseExist.teacherid === searcherid) {
+        return res.status(404).send({
+          message: "you cant  enroll for your  course",
+        });
       } else if (
         doesCourseExist.published === false ||
         doesCourseExist.status === false
@@ -52,6 +58,7 @@ export const enrollFreeCourse = async (req, res, next) => {
       }
     }
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };

@@ -66,32 +66,20 @@ export const updateLesson = async (req, res, next) => {
 };
 
 export const getTeachersLesson = async (req, res, next) => {
-  let { teacherid, courseid } = req.params;
+  let { courseid } = req.params;
   let doesUserExist = await Lesson.findOne({
-    where: { teacherid, courseid },
+    where: { courseid },
   });
   try {
     if (!doesUserExist) {
-      res.status(404).send({ message: "user doesnt exist" });
+      return res.status(404).send({ message: "user doesnt exist" });
     }
     const lessons = await Lesson.findAll({
       where: {
-        teacherid,
         courseid,
       },
-      include: [
-        {
-          model: User,
-          as: "user",
-          attibutes: ["id"],
-        },
-        {
-          model: Quiz,
-          as: "quizzes",
-        },
-      ],
     });
-    res.status(200).send(lessons);
+    return res.status(200).send(lessons);
   } catch (error) {
     next(error);
   }
@@ -139,4 +127,23 @@ export const deleteLesson = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+};
+
+export const getLesson = async (req, res) => {
+  let { lessonid, teacherid } = req.params;
+  let doesExist = await Lesson.findOne({
+    where: { teacherid, lessonid },
+  });
+  try {
+    if (!doesExist) {
+      res.status(404).send({ message: "doesnt exist" });
+    }
+    const lessons = await Lesson.findOne({
+      where: {
+        teacherid,
+        lessonid,
+      },
+    });
+    res.status(200).send(lessons);
+  } catch (error) {}
 };

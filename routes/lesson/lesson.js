@@ -2,6 +2,7 @@ import express from "express";
 import {
   createLesson,
   deleteLesson,
+  getLesson,
   getTeachersLesson,
   updateLesson,
 } from "../../controller/lesson.js";
@@ -12,7 +13,8 @@ const routes = express.Router({
 
 routes.post("/createlesson/:courseid/:teacherid", createLesson);
 routes.patch("/updatelesson/:courseid/:teacherid/:lessonid", updateLesson);
-routes.get("/getlessons/:teacherid/:courseid", getTeachersLesson);
+routes.get("/lessons/:courseid", getTeachersLesson);
 routes.delete("/deletelesson/:teacherid/:lessonid", deleteLesson);
+routes.get("/lessondetails/:lessonid/:teacherid", getLesson);
 
 export default routes;

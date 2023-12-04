@@ -166,9 +166,8 @@ export const userModel = (sequelize, DataTypes) => {
       allowNull: true,
     },
     onboarded: {
-      type: DataTypes.ENUM,
-      defaultValue: false,
-      values: [true, false],
+      type: DataTypes.BOOLEAN,
+      defaultValue: false, // set the default value as a string
     },
   });
 

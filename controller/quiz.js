@@ -5,30 +5,36 @@ const Lesson = db.lesson;
 
 export const createQuiz = async (req, res, next) => {
   let { courseid, teacherid, lessonid } = req.params;
-  let { question, optionA, optionB, optionC, optionD, correctoption } =
-    req.body;
+  let { formData } = req.body;
 
-  const quizData = {
+  console.log(formData.formData);
+
+  // Transform formData into an array of objects suitable for bulkCreate
+  const quizDataArray = formData.formData.map((data) => ({
     courseid,
     lessonid,
     teacherid,
-    question,
-    optionA,
-    optionB,
-    optionC,
-    optionD,
-    correctoption,
-  };
+    question: data.question,
+    optionA: data.optionA,
+    optionB: data.optionB,
+    optionC: data.optionC,
+    optionD: data.optionD,
+    correctoption: data.correctOption,
+  }));
 
   try {
-    const createdQuiz = await Quiz.create(quizData);
+    // Use bulkCreate to insert all quiz records at once
+    const quizRecords = await Quiz.bulkCreate(quizDataArray);
+
+    // Update lesson status after all quizzes have been created
     await Lesson.update(
       { quizadded: true },
       {
         where: { lessonid },
       }
     );
-    return res.status(201).send(createdQuiz);
+
+    return res.status(201).send({ message: "Quizzes created successfully" });
   } catch (error) {
     next(error);
   }
@@ -70,6 +76,7 @@ export const updateQuiz = async (req, res, next) => {
 
 export const getLessonQuiz = async (req, res, next) => {
   let { lessonid, teacherid } = req.params;
+  console.log("hh", lessonid, teacherid);
   try {
     const quiz = await Quiz.findAll({
       where: {
