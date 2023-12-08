@@ -232,6 +232,44 @@ export const getAllCourses = async (req, res, next) => {
   }
 };
 
+export const getAllCourses2 = async (req, res, next) => {
+  try {
+    // Extract query parameters for pagination
+    const page = parseInt(req.query.page) || 1; //0
+    const pageSize = parseInt(req.query.pageSize) || 10; //5 Adjust the default page size as needed
+    const totalCount = await Course.count({
+      where: { status: true, published: true },
+    });
+
+    // Calculate the offset based on the page and pageSize
+    const offset = (page - 1) * pageSize;
+    const totalPages = Math.ceil(totalCount / Number(pageSize)); //3
+    const courses = await Course.findAll({
+      order: [["createdAt", "DESC"]],
+      where: { status: true, published: true },
+      include: [
+        {
+          model: User,
+          as: "user",
+          attributes: ["userid", "firstname", "surname", "profilepicture"],
+        },
+        {
+          model: Enroll,
+          as: "enrollments",
+          attributes: ["enrollmentid", "courseid", "studentid"],
+        },
+      ],
+      offset,
+      limit: pageSize,
+    });
+
+    res.status(200).send({ courses, totalPages });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
 export const getTeachersCourses = async (req, res, next) => {
   const { teacherid } = req.params;
 

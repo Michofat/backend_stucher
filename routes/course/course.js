@@ -3,6 +3,7 @@ import {
   createCourse,
   deleteCourse,
   getAllCourses,
+  getAllCourses2,
   getCourseDetails,
   getSingleTeachersCourse,
   getTeachersCourses,
@@ -24,6 +25,8 @@ routes.get("/getcourses/:teacherid", getTeachersCourses);
 //routes.get("/coursedetails/:courseid/:teacherid", getSingleTeachersCourse);
 routes.get("/coursedetails/:courseid", getCourseDetails);
 routes.get("/courses", getAllCourses);
+routes.get("/coursespaginated", getAllCourses2);
+
 routes.patch("/publishcourse/:teacherid/:courseid", publishCourse);
 routes.patch("/unpublishcourse/:teacherid/:courseid", unpublishCourse);
 routes.patch("/monitizecourse/:teacherid/:courseid", monitizeCourse);

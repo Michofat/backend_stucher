@@ -120,3 +120,289 @@ db.quiz.belongsTo(db.lesson, {
 //relationship between quiz and lessons
 
 export default db;
+
+[
+  {
+    courseid: "4b1e29b2-38e6-4de1-834a-7512822f9821",
+    teacherid: "6190e02e-1d39-4461-b763-12aeb834d203",
+    title: "Career talk",
+    description: "This is the talk on career in washing metals",
+    coursecode: "CT101",
+    status: true,
+    introductoryvideolink:
+      "http://stucherstorage.michofat.com/public/videos/videoss-1701642913156.mp4",
+    published: true,
+    localcurrency: null,
+    courseimage: null,
+    courseicon:
+      "https://cdn.vectorstock.com/i/1000x1000/29/55/credit-card-icon-vector-20052955.webp",
+    localamount: null,
+    dollaramount: null,
+    monetize: false,
+    createdAt: "2023-12-03T22:35:21.000Z",
+    updatedAt: "2023-12-03T22:35:21.000Z",
+    user: {
+      userid: "6190e02e-1d39-4461-b763-12aeb834d203",
+      firstname: "Omolara",
+      surname: "Obisesan",
+      profilepicture:
+        "http://stucherstorage.michofat.com/public/images/profilepix/995f53av9dj31701531556821.jpg",
+    },
+    enrollments: [],
+  },
+  {
+    courseid: "4d27b5ed-8348-4bee-b418-e88786d78bc5",
+    teacherid: "6190e02e-1d39-4461-b763-12aeb834d203",
+    title: "Power in the blood",
+    description: "This is called anointing",
+    coursecode: "POW213",
+    status: true,
+    introductoryvideolink:
+      "http://stucherstorage.michofat.com/public/videos/videoss-1701630361252.mp4",
+    published: true,
+    localcurrency: null,
+    courseimage: null,
+    courseicon:
+      "https://cdn.vectorstock.com/i/1000x1000/29/55/credit-card-icon-vector-20052955.webp",
+    localamount: null,
+    dollaramount: null,
+    monetize: false,
+    createdAt: "2023-12-03T19:07:03.000Z",
+    updatedAt: "2023-12-03T19:07:03.000Z",
+    user: {
+      userid: "6190e02e-1d39-4461-b763-12aeb834d203",
+      firstname: "Omolara",
+      surname: "Obisesan",
+      profilepicture:
+        "http://stucherstorage.michofat.com/public/images/profilepix/995f53av9dj31701531556821.jpg",
+    },
+    enrollments: [],
+  },
+  {
+    courseid: "70fdd9fe-021c-42b9-b0b4-b02077b9eacf",
+    teacherid: "6190e02e-1d39-4461-b763-12aeb834d203",
+    title: "Tutorial on marriage ",
+    description: "Marriage is about communication ",
+    coursecode: "MRG343",
+    status: true,
+    introductoryvideolink:
+      "http://stucherstorage.michofat.com/public/videos/videoss-1701630240187.mp4",
+    published: true,
+    localcurrency: null,
+    courseimage: null,
+    courseicon:
+      "https://cdn.vectorstock.com/i/1000x1000/29/55/credit-card-icon-vector-20052955.webp",
+    localamount: null,
+    dollaramount: null,
+    monetize: false,
+    createdAt: "2023-12-03T19:04:03.000Z",
+    updatedAt: "2023-12-03T19:04:03.000Z",
+    user: {
+      userid: "6190e02e-1d39-4461-b763-12aeb834d203",
+      firstname: "Omolara",
+      surname: "Obisesan",
+      profilepicture:
+        "http://stucherstorage.michofat.com/public/images/profilepix/995f53av9dj31701531556821.jpg",
+    },
+    enrollments: [],
+  },
+  {
+    courseid: "d956b13b-4e2a-49b5-b440-75cb1094ccc7",
+    teacherid: "d56d64f4-7f67-4bac-ba4d-58e616da1b81",
+    title: "Praying Pattern Planet",
+    description: "Building property",
+    coursecode: "POP",
+    status: true,
+    introductoryvideolink:
+      "http://stucherstorage.michofat.com/public/videos/videoss-1701538358762.mp4",
+    published: true,
+    localcurrency: null,
+    courseimage: null,
+    courseicon:
+      "https://cdn.vectorstock.com/i/1000x1000/29/55/credit-card-icon-vector-20052955.webp",
+    localamount: null,
+    dollaramount: null,
+    monetize: false,
+    createdAt: "2023-12-02T17:32:41.000Z",
+    updatedAt: "2023-12-02T17:32:41.000Z",
+    user: {
+      userid: "d56d64f4-7f67-4bac-ba4d-58e616da1b81",
+      firstname: "Omolara",
+      surname: "Obisesan",
+      profilepicture:
+        "http://stucherstorage.michofat.com/public/images/profilepix/wtsyur78igvf1701536247508.jpg",
+    },
+    enrollments: [],
+  },
+  {
+    courseid: "dd7d0f1d-ed4c-4ff6-92d6-0e4d4b5cfe7e",
+    teacherid: "6190e02e-1d39-4461-b763-12aeb834d203",
+    title: "The fall of Devil",
+    description: "This is the fall of the angel called Lucifar",
+    coursecode: "FDD302",
+    status: true,
+    introductoryvideolink:
+      "http://stucherstorage.michofat.com/public/videos/videoss-1701538239771.mp4",
+    published: true,
+    localcurrency: null,
+    courseimage: null,
+    courseicon:
+      "https://cdn.vectorstock.com/i/1000x1000/29/55/credit-card-icon-vector-20052955.webp",
+    localamount: null,
+    dollaramount: null,
+    monetize: false,
+    createdAt: "2023-12-02T17:30:43.000Z",
+    updatedAt: "2023-12-02T17:30:43.000Z",
+    user: {
+      userid: "6190e02e-1d39-4461-b763-12aeb834d203",
+      firstname: "Omolara",
+      surname: "Obisesan",
+      profilepicture:
+        "http://stucherstorage.michofat.com/public/images/profilepix/995f53av9dj31701531556821.jpg",
+    },
+    enrollments: [],
+  },
+];
+
+[
+  {
+    courseid: "d0f74116-420f-4910-b414-e0819c0963f7",
+    teacherid: "6190e02e-1d39-4461-b763-12aeb834d203",
+    title: "Pool",
+    description: "Describe me b4",
+    coursecode: "Paal",
+    status: true,
+    introductoryvideolink:
+      "http://stucherstorage.michofat.com/public/videos/videoss-1701537995341.mp4",
+    published: true,
+    localcurrency: null,
+    courseimage: null,
+    courseicon:
+      "https://cdn.vectorstock.com/i/1000x1000/29/55/credit-card-icon-vector-20052955.webp",
+    localamount: null,
+    dollaramount: null,
+    monetize: false,
+    createdAt: "2023-12-02T17:26:44.000Z",
+    updatedAt: "2023-12-02T17:26:44.000Z",
+    user: {
+      userid: "6190e02e-1d39-4461-b763-12aeb834d203",
+      firstname: "Omolara",
+      surname: "Obisesan",
+      profilepicture:
+        "http://stucherstorage.michofat.com/public/images/profilepix/995f53av9dj31701531556821.jpg",
+    },
+    enrollments: [],
+  },
+  {
+    courseid: "c4877f8b-4a5a-4df0-b095-b3c60b54f551",
+    teacherid: "c8f2b67f-0597-438e-bb8d-ea6ff996df9b",
+    title: "Pooo",
+    description: "Played",
+    coursecode: "Loop",
+    status: true,
+    introductoryvideolink:
+      "http://stucherstorage.michofat.com/public/videos/videoss-1701537984787.mp4",
+    published: true,
+    localcurrency: null,
+    courseimage: null,
+    courseicon:
+      "https://cdn.vectorstock.com/i/1000x1000/29/55/credit-card-icon-vector-20052955.webp",
+    localamount: null,
+    dollaramount: null,
+    monetize: false,
+    createdAt: "2023-12-02T17:26:26.000Z",
+    updatedAt: "2023-12-02T17:26:26.000Z",
+    user: {
+      userid: "c8f2b67f-0597-438e-bb8d-ea6ff996df9b",
+      firstname: "Omotayo",
+      surname: "Iyiola",
+      profilepicture:
+        "http://stucherstorage.michofat.com/public/images/profilepix/995f53av9dj31701531414908.jpg",
+    },
+    enrollments: [],
+  },
+  {
+    courseid: "f105ccc7-c531-4a79-bf87-c9c983d415a3",
+    teacherid: "c8f2b67f-0597-438e-bb8d-ea6ff996df9b",
+    title: "Polly",
+    description: "Trend now or later",
+    coursecode: "Yuy",
+    status: true,
+    introductoryvideolink:
+      "http://stucherstorage.michofat.com/public/videos/videoss-1701537000703.mp4",
+    published: true,
+    localcurrency: null,
+    courseimage: null,
+    courseicon:
+      "https://cdn.vectorstock.com/i/1000x1000/29/55/credit-card-icon-vector-20052955.webp",
+    localamount: null,
+    dollaramount: null,
+    monetize: false,
+    createdAt: "2023-12-02T17:11:32.000Z",
+    updatedAt: "2023-12-02T17:11:32.000Z",
+    user: {
+      userid: "c8f2b67f-0597-438e-bb8d-ea6ff996df9b",
+      firstname: "Omotayo",
+      surname: "Iyiola",
+      profilepicture:
+        "http://stucherstorage.michofat.com/public/images/profilepix/995f53av9dj31701531414908.jpg",
+    },
+    enrollments: [],
+  },
+  {
+    courseid: "89e407e1-fde6-4c15-82db-dfd7047c55f1",
+    teacherid: "c8f2b67f-0597-438e-bb8d-ea6ff996df9b",
+    title: "Youube",
+    description: "The land",
+    coursecode: "Yuy",
+    status: true,
+    introductoryvideolink:
+      "http://stucherstorage.michofat.com/public/videos/videoss-1701535851098.mp4",
+    published: true,
+    localcurrency: null,
+    courseimage: null,
+    courseicon:
+      "https://cdn.vectorstock.com/i/1000x1000/29/55/credit-card-icon-vector-20052955.webp",
+    localamount: null,
+    dollaramount: null,
+    monetize: false,
+    createdAt: "2023-12-02T16:50:52.000Z",
+    updatedAt: "2023-12-02T16:50:52.000Z",
+    user: {
+      userid: "c8f2b67f-0597-438e-bb8d-ea6ff996df9b",
+      firstname: "Omotayo",
+      surname: "Iyiola",
+      profilepicture:
+        "http://stucherstorage.michofat.com/public/images/profilepix/995f53av9dj31701531414908.jpg",
+    },
+    enrollments: [],
+  },
+  {
+    courseid: "e7e1cd73-c9af-48b4-a023-d21ac95c678b",
+    teacherid: "c8f2b67f-0597-438e-bb8d-ea6ff996df9b",
+    title: "Poland is down",
+    description: "This is not what you think ",
+    coursecode: "POL23",
+    status: true,
+    introductoryvideolink:
+      "http://stucherstorage.michofat.com/public/videos/videoss-1701535219349.mp4",
+    published: true,
+    localcurrency: null,
+    courseimage: null,
+    courseicon:
+      "https://cdn.vectorstock.com/i/1000x1000/29/55/credit-card-icon-vector-20052955.webp",
+    localamount: null,
+    dollaramount: null,
+    monetize: false,
+    createdAt: "2023-12-02T16:40:35.000Z",
+    updatedAt: "2023-12-02T16:40:35.000Z",
+    user: {
+      userid: "c8f2b67f-0597-438e-bb8d-ea6ff996df9b",
+      firstname: "Omotayo",
+      surname: "Iyiola",
+      profilepicture:
+        "http://stucherstorage.michofat.com/public/images/profilepix/995f53av9dj31701531414908.jpg",
+    },
+    enrollments: [],
+  },
+];

@@ -76,7 +76,6 @@ export const updateQuiz = async (req, res, next) => {
 
 export const getLessonQuiz = async (req, res, next) => {
   let { lessonid, teacherid } = req.params;
-  console.log("hh", lessonid, teacherid);
   try {
     const quiz = await Quiz.findAll({
       where: {
