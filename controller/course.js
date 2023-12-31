@@ -278,7 +278,6 @@ export const getTeachersCourses = async (req, res, next) => {
       order: [["createdAt", "DESC"]],
       where: {
         teacherid,
-        published: true,
         status: true,
       },
       include: [

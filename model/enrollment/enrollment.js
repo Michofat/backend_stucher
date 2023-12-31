@@ -27,8 +27,9 @@ export const enrollmentModel = (sequelize, DataTypes) => {
       allowNull: true,
     },
     status: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: true,
+      type: DataTypes.TINYINT,
+      defaultValue: 1,
+      allowNull: false,
     },
   });
 

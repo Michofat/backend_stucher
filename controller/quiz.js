@@ -4,10 +4,10 @@ const Quiz = db.quiz;
 const Lesson = db.lesson;
 
 export const createQuiz = async (req, res, next) => {
+  console.log("reached");
   let { courseid, teacherid, lessonid } = req.params;
   let { formData } = req.body;
-
-  console.log(formData.formData);
+  console.log(formData);
 
   // Transform formData into an array of objects suitable for bulkCreate
   const quizDataArray = formData.formData.map((data) => ({

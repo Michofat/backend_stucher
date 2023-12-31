@@ -28,6 +28,7 @@ export const createLesson = async (req, res, next) => {
 
     return res.status(201).send(createdLesson);
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };
@@ -67,12 +68,12 @@ export const updateLesson = async (req, res, next) => {
 
 export const getTeachersLesson = async (req, res, next) => {
   let { courseid } = req.params;
-  let doesUserExist = await Lesson.findOne({
+  let doesLessonExist = await Lesson.findOne({
     where: { courseid },
   });
   try {
-    if (!doesUserExist) {
-      return res.status(404).send({ message: "user doesnt exist" });
+    if (!doesLessonExist) {
+      return res.status(404).send({ message: "lesson doesnt exist" });
     }
     const lessons = await Lesson.findAll({
       where: {

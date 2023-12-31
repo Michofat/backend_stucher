@@ -19,7 +19,7 @@ export const lessonModel = (sequelize, DataTypes) => {
     },
     duration: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     description: {
       type: DataTypes.STRING,

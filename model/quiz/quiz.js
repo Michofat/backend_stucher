@@ -1,10 +1,13 @@
-import { userModel } from "../user/user.js";
-
 export const quizModel = (sequelize, DataTypes) => {
   const Quiz = sequelize.define("quiz", {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+      allowNull: false,
+    },
     quizid: {
       type: DataTypes.UUID,
-      primaryKey: true,
       defaultValue: DataTypes.UUIDV4,
       allowNull: false,
     },

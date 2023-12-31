@@ -29,7 +29,7 @@ export const enrollFreeCourse = async (req, res, next) => {
 
       if (isAlreadyEnrolled) {
         return res.status(400).send({
-          message: "You are already enrolled in this course.",
+          message: "You have already enrolled in this course.",
         });
       }
 
@@ -136,3 +136,38 @@ export const getCoursesEnrolled = async (req, res) => {
     res.status(200).send(enrolled);
   } catch (error) {}
 };
+
+export const enrollstatus = async (req, res) => {
+  let { studentid, courseid } = req.params;
+  try {
+    let enrollstatus = await Enroll.findOne({
+      where: { studentid, courseid },
+    });
+    if (!enrollstatus) {
+      return res.status(200).send({ message: "course doesnt exist" });
+    }
+    if (enrollstatus.status === 0) {
+      return res.status(200).send({ enrollstatus: false });
+    } else if (enrollstatus.status === 1) {
+      return res.status(200).send({ enrollstatus: true });
+    } else {
+      return res.status(200).send({ enrollstatus: "completed" });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const enrolledcourses = async (req, res, next) => {
+  let { studentid } = req.params;
+  try {
+    let enrolledcourses = await Enroll.findAll({
+      where: { studentid, status: 1 },
+    });
+    return res.status(200).send(enrolledcourses);
+  } catch (error) {
+    next(error);
+  }
+};
+
+//get my enrolled courses -studentid
