@@ -1,7 +1,7 @@
 import db from "../model/index.js";
 const Lesson = db.lesson;
 const Course = db.course;
-const Quiz = db.quiz;
+const LessonLog = db.lessonlog;
 
 const User = db.user;
 export const createLesson = async (req, res, next) => {
@@ -79,6 +79,7 @@ export const getTeachersLesson = async (req, res, next) => {
       where: {
         courseid,
       },
+      order: [["createdAt", "ASC"]],
     });
     return res.status(200).send(lessons);
   } catch (error) {
@@ -147,4 +148,60 @@ export const getLesson = async (req, res) => {
     });
     res.status(200).send(lessons);
   } catch (error) {}
+};
+
+export const nextLesson = async (req, res) => {
+  let { courseid, studentid } = req.params;
+  let lessonlogscount = await LessonLog.count({
+    where: {
+      courseid,
+      studentid,
+    },
+  });
+  console.log(lessonlogscount);
+  const nextLesson = await Lesson.findOne({
+    where: {
+      courseid,
+    },
+    offset: lessonlogscount,
+    limit: 1,
+  });
+  if (!nextLesson) {
+    return res.status(400).send({ message: "lesson completed" });
+  }
+  return res.status(200).send(nextLesson);
+};
+
+export const LessonStatus = async (req, res, next) => {
+  try {
+    let { courseid, studentid } = req.params;
+
+    const lessons = await Lesson.findAll({
+      where: {
+        courseid,
+      },
+    });
+
+    const lessonsWithStatus = await Promise.all(
+      lessons.map(async (lesson) => {
+        const lessonLog = await LessonLog.findOne({
+          where: {
+            lessonid: lesson.lessonid,
+            studentid,
+          },
+        });
+
+        const completedstatus = lessonLog ? true : false;
+
+        return {
+          ...lesson.toJSON(),
+          completedstatus,
+        };
+      })
+    );
+
+    res.status(200).send(lessonsWithStatus);
+  } catch (error) {
+    next(error);
+  }
 };

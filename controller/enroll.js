@@ -123,10 +123,12 @@ export const getCoursesEnrolled = async (req, res) => {
       {
         model: Course,
         as: "enroledcourse",
+        attributes: ["title"],
         include: [
           {
             model: User,
             as: "user",
+            attributes: ["firstname", "surname", "profilepicture"],
           },
         ],
       },
@@ -137,14 +139,15 @@ export const getCoursesEnrolled = async (req, res) => {
   } catch (error) {}
 };
 
-export const enrollstatus = async (req, res) => {
+export const enrollstatus = async (req, res, next) => {
   let { studentid, courseid } = req.params;
+  console.log(studentid, courseid);
   try {
     let enrollstatus = await Enroll.findOne({
       where: { studentid, courseid },
     });
     if (!enrollstatus) {
-      return res.status(200).send({ message: "course doesnt exist" });
+      return res.status(200).send({ enrollstatus: false });
     }
     if (enrollstatus.status === 0) {
       return res.status(200).send({ enrollstatus: false });
@@ -171,3 +174,6 @@ export const enrolledcourses = async (req, res, next) => {
 };
 
 //get my enrolled courses -studentid
+
+//lesson log table
+//on continue button studentid, courseid will be sent..

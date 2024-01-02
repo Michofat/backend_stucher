@@ -5,6 +5,7 @@ import { courseModel } from "./course/course.js";
 import { lessonModel } from "./lesson/lesson.js";
 import { quizModel } from "./quiz/quiz.js";
 import { enrollmentModel } from "./enrollment/enrollment.js";
+import { lessonlogModel } from "./lessonlog/lessonlog.js";
 
 export const sequelize = new Sequelize(
   dbConn.DB,
@@ -37,6 +38,7 @@ db.course = courseModel(sequelize, DataTypes);
 db.lesson = lessonModel(sequelize, DataTypes);
 db.quiz = quizModel(sequelize, DataTypes);
 db.enrollment = enrollmentModel(sequelize, DataTypes);
+db.lessonlog = lessonlogModel(sequelize, DataTypes);
 
 db.sequelize.sync({ force: false }).then(() => {
   console.log("yes re-sync done!!");

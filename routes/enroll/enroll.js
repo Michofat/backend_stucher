@@ -12,8 +12,8 @@ const routes = express.Router({
 
 routes.post("/enroll/:searcherid/:courseid", enrollFreeCourse);
 routes.post("/enrollpay/:searcherid/:courseid/:teacherid", enrollPaidCourse);
-routes.get("/coursesenrolled/:studentid", getCoursesEnrolled);
+routes.get("/enrolledcourses/:studentid", getCoursesEnrolled);
 routes.get("/enrollstatus/:studentid/:courseid", enrollstatus);
-routes.get("/enrolledcourses/:studentid", enrolledcourses);
+//routes.get("/enrolledcourses/:studentid", enrolledcourses);
 
 export default routes;
