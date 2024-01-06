@@ -275,7 +275,6 @@ export const getTeachersCourses = async (req, res, next) => {
 
   try {
     const courseWithLessons = await Course.findAll({
-      order: [["createdAt", "DESC"]],
       where: {
         teacherid,
         status: true,

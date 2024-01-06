@@ -88,6 +88,29 @@ export const getLessonQuiz = async (req, res, next) => {
     next(error);
   }
 };
+export const getLessonQuizEnroll = async (req, res, next) => {
+  let { lessonid, teacherid } = req.params;
+  try {
+    const quiz = await Quiz.findAll({
+      where: {
+        lessonid,
+        teacherid,
+      },
+      attributes: [
+        "quizid",
+        "question",
+        "optionA",
+        "optionB",
+        "optionC",
+        "optionD",
+        "correctoption",
+      ],
+    });
+    res.status(200).send(quiz);
+  } catch (error) {
+    next(error);
+  }
+};
 export const getSingleQuiz = async (req, res, next) => {
   let { quizid } = req.params;
   let doesExist = await Quiz.findOne({

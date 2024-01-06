@@ -158,11 +158,11 @@ export const nextLesson = async (req, res) => {
       studentid,
     },
   });
-  console.log(lessonlogscount);
   const nextLesson = await Lesson.findOne({
     where: {
       courseid,
     },
+    order: [["createdAt", "ASC"]],
     offset: lessonlogscount,
     limit: 1,
   });
@@ -175,13 +175,12 @@ export const nextLesson = async (req, res) => {
 export const LessonStatus = async (req, res, next) => {
   try {
     let { courseid, studentid } = req.params;
-
     const lessons = await Lesson.findAll({
       where: {
         courseid,
       },
+      order: [["createdAt", "ASC"]],
     });
-
     const lessonsWithStatus = await Promise.all(
       lessons.map(async (lesson) => {
         const lessonLog = await LessonLog.findOne({
@@ -201,6 +200,52 @@ export const LessonStatus = async (req, res, next) => {
     );
 
     res.status(200).send(lessonsWithStatus);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// export const createLessonLog = async (req, res, next) => {
+//   let { courseid, studentid, lessonid } = req.params;
+//   console.log(courseid, studentid, lessonid);
+//   try {
+//     const lessonlogData = {
+//       courseid,
+//       studentid,
+//       lessonid,
+//     };
+//     const doesLogExist = await LessonLog.findOne({
+//       courseid,
+//       studentid,
+//       lessonid,
+//     });
+//     if (doesLogExist) {
+//       res.status(400).send({ messsage: "cant post lesson log" });
+//     } else {
+//       await LessonLog.create(lessonlogData);
+//       res.status(201).send({ messsage: "success" });
+//     }
+//   } catch (error) {
+//     next(error);
+//   }
+// };
+
+export const createLessonLog = async (req, res, next) => {
+  let { courseid, studentid, lessonid } = req.params;
+  console.log(courseid, studentid, lessonid);
+  try {
+    const lessonlogData = {
+      courseid,
+      studentid,
+      lessonid,
+    };
+    const doesLogExist = await LessonLog.findOne({
+      courseid,
+      studentid,
+      lessonid,
+    });
+    await LessonLog.create(lessonlogData);
+    res.status(201).send({ messsage: "success" });
   } catch (error) {
     next(error);
   }

@@ -2,6 +2,7 @@ export const lessonlogModel = (sequelize, DataTypes) => {
   const Lessonlog = sequelize.define("lessonlog", {
     lessonlogid: {
       type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
       unique: true,
       allowNull: false,
       primaryKey: true,
