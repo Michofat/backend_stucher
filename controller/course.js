@@ -38,23 +38,11 @@ export const updateCourse = async (req, res, next) => {
       teacherid,
     },
   });
-  let {
-    title,
-    description,
-    videolink,
-    imagelink,
-    introductoryvideolink,
-    courseimage,
-    monitize,
-  } = req.body;
+  let { title, description, coursecode } = req.body;
   const courseupdates = {
     title,
     description,
-    videolink,
-    imagelink,
-    introductoryvideolink,
-    courseimage,
-    monitize,
+    coursecode,
   };
   try {
     if (doesCourseExist) {
@@ -457,6 +445,35 @@ export const searchCourses = async (req, res, next) => {
     });
 
     res.status(200).send(courses);
+  } catch (error) {
+    next(error);
+  }
+};
+export const editCourseIntroVideo = async (req, res, next) => {
+  let { courseid, teacherid } = req.params;
+  console.log(courseid, teacherid);
+  const doesCourseExist = await Course.findOne({
+    where: {
+      courseid,
+      teacherid,
+    },
+  });
+  let { introductoryvideolink } = req.body;
+  const courseupdates = {
+    introductoryvideolink,
+  };
+  console.log(doesCourseExist);
+  try {
+    if (doesCourseExist) {
+      await Course.update(courseupdates, { where: { courseid, teacherid } });
+    } else {
+      return res.status(404).send({
+        message: "error updating resources",
+      });
+    }
+    return res.status(200).send({
+      message: "course updated successfully",
+    });
   } catch (error) {
     next(error);
   }

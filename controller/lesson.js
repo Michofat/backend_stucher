@@ -6,7 +6,7 @@ const LessonLog = db.lessonlog;
 const User = db.user;
 export const createLesson = async (req, res, next) => {
   let { courseid, teacherid } = req.params;
-  let { title, description, videolink, imagelink } = req.body;
+  let { title, description, videolink } = req.body;
 
   const lessonData = {
     courseid,
@@ -14,7 +14,6 @@ export const createLesson = async (req, res, next) => {
     title,
     description,
     videolink,
-    imagelink,
   };
 
   try {
@@ -41,12 +40,10 @@ export const updateLesson = async (req, res, next) => {
       lessonid,
     },
   });
-  let { title, description, videolink, imagelink } = req.body;
+  let { title, description, videolink } = req.body;
   const lessonupdates = {
     title,
     description,
-    videolink,
-    imagelink,
   };
   try {
     if (doesLessonExist) {
@@ -73,7 +70,9 @@ export const getTeachersLesson = async (req, res, next) => {
   });
   try {
     if (!doesLessonExist) {
-      return res.status(404).send({ message: "lesson doesnt exist" });
+      return res
+        .status(404)
+        .send({ message: "Please add lessons to this course" });
     }
     const lessons = await Lesson.findAll({
       where: {
@@ -138,7 +137,7 @@ export const getLesson = async (req, res) => {
   });
   try {
     if (!doesExist) {
-      res.status(404).send({ message: "doesnt exist" });
+      res.status(404).send({ message: "error fetching lesson" });
     }
     const lessons = await Lesson.findOne({
       where: {

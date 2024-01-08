@@ -2,6 +2,7 @@ import express from "express";
 import {
   createCourse,
   deleteCourse,
+  editCourseIntroVideo,
   getAllCourses,
   getAllCourses2,
   getCourseDetails,
@@ -31,5 +32,9 @@ routes.patch("/publishcourse/:teacherid/:courseid", publishCourse);
 routes.patch("/unpublishcourse/:teacherid/:courseid", unpublishCourse);
 routes.patch("/monitizecourse/:teacherid/:courseid", monitizeCourse);
 routes.get(`/searchcourses`, searchCourses);
+routes.patch(
+  `/editcourseintrovideo/:teacherid/:courseid`,
+  editCourseIntroVideo
+);
 
 export default routes;
