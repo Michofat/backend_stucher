@@ -8,6 +8,7 @@ import {
   getTeachersLesson,
   nextLesson,
   updateLesson,
+  updateLessonVideoLink,
 } from "../../controller/lesson.js";
 
 const routes = express.Router({
@@ -22,5 +23,14 @@ routes.get("/lessondetails/:lessonid/:teacherid", getLesson);
 routes.get("/nextlesson/:studentid/:courseid", nextLesson);
 routes.get("/lessoncompletestatus/:studentid/:courseid", LessonStatus);
 routes.post("/createlessonlog/:studentid/:courseid/:lessonid", createLessonLog);
+routes.patch(
+  `/updatelessonvideolink/:lessonid/:teacherid/:courseid`,
+  updateLessonVideoLink
+);
 
 export default routes;
+
+//replace lesson video endpoint
+//delete quiz
+
+//quizid and teacherid

@@ -146,7 +146,9 @@ export const getLesson = async (req, res) => {
       },
     });
     res.status(200).send(lessons);
-  } catch (error) {}
+  } catch (error) {
+    next(error);
+  }
 };
 
 export const nextLesson = async (req, res) => {
@@ -245,6 +247,36 @@ export const createLessonLog = async (req, res, next) => {
     });
     await LessonLog.create(lessonlogData);
     res.status(201).send({ messsage: "success" });
+  } catch (error) {
+    next(error);
+  }
+};
+export const updateLessonVideoLink = async (req, res, next) => {
+  let { courseid, teacherid, lessonid } = req.params;
+  const doesLessonExist = await Lesson.findOne({
+    where: {
+      courseid,
+      teacherid,
+      lessonid,
+    },
+  });
+  let { videolink } = req.body;
+  const lessonupdates = {
+    videolink,
+  };
+  try {
+    if (doesLessonExist) {
+      await Lesson.update(lessonupdates, {
+        where: { courseid, teacherid, lessonid },
+      });
+    } else {
+      return res.status(404).send({
+        message: "error updating resources",
+      });
+    }
+    return res.status(200).send({
+      message: "lesson updated successfully",
+    });
   } catch (error) {
     next(error);
   }

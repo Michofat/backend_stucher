@@ -148,7 +148,7 @@ export const deleteQuiz = async (req, res, next) => {
       },
     });
 
-    return res.status(200).send({ message: "Deleted successfully" });
+    return res.status(200).send({ message: "Quiz deleted successfully" });
   } catch (error) {
     return next(error);
   }

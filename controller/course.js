@@ -122,7 +122,7 @@ export const deleteCourse = async (req, res, next) => {
 //   } catch (error) {}
 // };
 
-export const getSingleTeachersCourse = async (req, res) => {
+export const getSingleTeachersCourse = async (req, res, next) => {
   let { courseid, teacherid } = req.params;
   let doesExist = await Course.findOne({
     where: { teacherid, courseid },
@@ -154,10 +154,12 @@ export const getSingleTeachersCourse = async (req, res) => {
       ],
     });
     res.status(200).send(courses);
-  } catch (error) {}
+  } catch (error) {
+    next(error);
+  }
 };
 
-export const getCourseDetails = async (req, res) => {
+export const getCourseDetails = async (req, res, next) => {
   let { courseid } = req.params;
   let doesExist = await Course.findOne({
     where: { courseid },
@@ -191,7 +193,9 @@ export const getCourseDetails = async (req, res) => {
 
     course.dataValues.enrollmentcount = numberOfStudents;
     res.status(200).send(course);
-  } catch (error) {}
+  } catch (error) {
+    next(error);
+  }
 };
 
 export const getAllCourses = async (req, res, next) => {
@@ -474,6 +478,87 @@ export const editCourseIntroVideo = async (req, res, next) => {
     return res.status(200).send({
       message: "course updated successfully",
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getAllCourseLessonLinks = async (req, res, next) => {
+  let { courseid, teacherid } = req.params;
+  try {
+    const doesCourseExist = await Course.findOne({
+      where: {
+        courseid,
+        teacherid,
+      },
+    });
+    if (!doesCourseExist) {
+      return res.status(404).json({ message: "Course not found" });
+    } else {
+      const courses = await Course.findOne({
+        where: {
+          courseid,
+        },
+        attributes: ["introductoryvideolink"],
+        include: [
+          {
+            model: Lesson,
+            as: "lessons",
+            attributes: ["videolink"],
+          },
+        ],
+      });
+      console.log(courses);
+      const introductoryVideoLink = courses.dataValues.introductoryvideolink;
+
+      const lessonVideoLinks = courses.lessons.map(
+        (lesson) => lesson.videolink
+      );
+
+      const allVideoLinks = [introductoryVideoLink, ...lessonVideoLinks];
+
+      return res.status(200).send(allVideoLinks);
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const deleteCourseLessons = async (req, res, next) => {
+  let { courseid } = req.params;
+
+  try {
+    const doesCourseExist = await Course.findOne({
+      where: {
+        courseid,
+      },
+    });
+
+    if (!doesCourseExist) {
+      return res.status(404).json({ message: "Course not found" });
+    } else {
+      await Course.update(
+        { status: 0 },
+        {
+          where: {
+            courseid,
+          },
+        }
+      );
+
+      await Lesson.update(
+        { status: 0 },
+        {
+          where: {
+            courseid,
+          },
+        }
+      );
+
+      return res.status(200).json({
+        message: "Course and associated lessons deleted successfully",
+      });
+    }
   } catch (error) {
     next(error);
   }

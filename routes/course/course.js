@@ -2,7 +2,9 @@ import express from "express";
 import {
   createCourse,
   deleteCourse,
+  deleteCourseLessons,
   editCourseIntroVideo,
+  getAllCourseLessonLinks,
   getAllCourses,
   getAllCourses2,
   getCourseDetails,
@@ -36,5 +38,7 @@ routes.patch(
   `/editcourseintrovideo/:teacherid/:courseid`,
   editCourseIntroVideo
 );
+routes.get(`/courselessonlinks/:teacherid/:courseid`, getAllCourseLessonLinks);
+routes.delete("/deletecourselessons/:courseid", deleteCourseLessons);
 
 export default routes;
